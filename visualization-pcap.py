@@ -25,26 +25,6 @@ def get_list_ID(df):
     for index, row in df.iterrows():
         d = (row['end'] - row['start']) + 1
         pkt.extend([ row['index'] for i in range(d)])
-        # if row['start'] == p:
-        #     while (p != row['end'] + 1):
-        #         print(p)
-        #         pkt.append([p, row['index']])
-        #         p = p + 1
-        #         if p == max:
-        #             break
-        # else:
-        #     while (p != row['start']):
-        #         print(p)
-        #         pkt.append([p, np.nan])
-        #         p = p + 1
-        #         if p == max:
-        #             break
-        #     while (p != row['end'] + 1):
-        #         pkt.append([p, row['index']])
-        #         p = p + 1
-        #         if p == max:
-        #             break
-    #ix = pd.DataFrame(pkt)[1].values
     return np.array(pkt)
 
 
@@ -61,7 +41,6 @@ def parse_packet(pkt, start):
     dict_pcap - list
         Список полей сетевых протоколов пакета с указателями.
     """
-    #dict_pcap = np.array([])
     dict_pcap = list()                                                # Список полей сетевых протоколов.
     endp = start + len(pkt)
     try:
@@ -254,12 +233,6 @@ def analysis_pcap(pcap_file):
     indexlist = list()
     matrix_pcap['index'] = matrix_pcap['word'].map(lambda word:
                                                    dictionary_pcap[dictionary_pcap == word].index.values[0])
-    # for index, row in matrix_pcap.iterrows():
-    #     #print(index) 63.92
-    #     word = row['word']
-    #     ix = dictionary_pcap[dictionary_pcap == word].index.values[0]
-    #     indexlist.append(ix)
-    #matrix_pcap['index'] = pd.Series(indexlist)
     matrix_pcap = matrix_pcap.sort_values('start')
     return [matrix_pcap, dictionary_pcap]
 
@@ -313,10 +286,6 @@ def create_heatmap(data, img_name):
         matrix_width_in = matrix_width_pt / dpi
         figure_height = matrix_height_in / (1 - top_margin - bottom_margin)
         figure_width = matrix_width_in                              # Высота и ширина фигуры.
-
-        # if (figure_height*100 > 65535):
-        #     figure_width = (65535/figure_height)*figure_width
-        #     figure_height = 65535
 
         fig, (cbar_ax, ax) = plt.subplots(
             2,
